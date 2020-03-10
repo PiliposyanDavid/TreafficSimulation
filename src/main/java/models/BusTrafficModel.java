@@ -43,10 +43,10 @@ public class BusTrafficModel {
 
     @Override
     public String toString() {
-        return new StringJoiner(", ", BusTrafficModel.class.getSimpleName() + "[", "]")
-                .add("trafficJamPer1Second=" + trafficJamPer1Second)
-                .add("trafficJamPer10Second=" + trafficJamPer10Second)
-                .add("trafficJamPer100Second=" + trafficJamPer100Second)
+        return new StringJoiner("\n", "", "")
+                .add("traffic jam 1 = " + trafficJamPer1Second)
+                .add("traffic jam 10 = " + trafficJamPer10Second)
+                .add("traffic jam 100 = " + trafficJamPer100Second)
                 .toString();
     }
 }
