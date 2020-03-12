@@ -25,15 +25,15 @@ public class Destination {
 
         distance = Math.pow(distance, 2);
 
-        return Math.sqrt(distance);
+        return Math.round(Math.sqrt(distance));
     }
 
     public static void main(String[] args) {
-        Double homeLat = 40.247816912575175;
-        Double homeLon = 44.65914688861068;
+        Double homeLat = 40.273419;
+        Double homeLon = 44.620235;
 
-        Double workLat = 40.19652420630428;
-        Double workLon = 44.4797406590028;
+        Double workLat = 40.273519;
+        Double workLon = 44.620335;
 
         Double distance = distance(homeLat, workLat, homeLon, workLon);
         System.out.println(distance);//16264.821802423534

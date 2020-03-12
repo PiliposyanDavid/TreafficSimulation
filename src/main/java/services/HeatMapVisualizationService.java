@@ -7,14 +7,12 @@ import models.BusLocationModel;
 import models.BusTrafficModel;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 public class HeatMapVisualizationService {
     private ArrayList<BusLocationModel> busLocationModels;
-    private Map<String, String> routeMap = new HashMap<>();
+    private Map<String, String> routeMap = new TreeMap<String, String>();
+    BusTrafficModel busTrafficModel = new BusTrafficModel();
 
     HeatMapVisualizationService() {
         try {
@@ -52,33 +50,77 @@ public class HeatMapVisualizationService {
         return getTrafficStatePer1Second(destination / 100);
     }
 
-    public static void main(String[] args) {
-        HeatMapVisualizationService heatMapVisualizationService = new HeatMapVisualizationService();
-        BusTrafficModel trafficModel = new BusTrafficModel();
-        Random rand = new Random();
+    private void getTrafficFromTestResource() {
+        Random random = new Random();
 
-        Double randomDataPer1Second;
-        Double randomDataPer10Second;
-        Double randomDataPer100Second;
+        busLocationModels.forEach(busLocationModel -> {
+            double randomValue = 0.00001 + (0.0001 - 0.00001) * random.nextDouble();
 
-        for (int i = 0; i < 10; i++) {
+            Double lat1 = busLocationModel.getLat() + randomValue;
+            Double lon1 = busLocationModel.getLon() + randomValue;
 
-            randomDataPer1Second = 1 + (18 - 1) * rand.nextDouble();
-            randomDataPer10Second = 1 + (180 - 1) * rand.nextDouble();
-            randomDataPer100Second = 1 + (1800 - 1) * rand.nextDouble();
+
+            Double lat2 = busLocationModels.get(0).getLat();
+            Double lon2 = busLocationModels.get(0).getLon();
+
+            Double distance = Destination.distance(lat1, lat2, lon1, lon2);
 
             try {
-                trafficModel.setTrafficJamPer1Second(heatMapVisualizationService.getTrafficStatePer1Second(randomDataPer1Second).toString());
-                trafficModel.setTrafficJamPer10Second(heatMapVisualizationService.getTrafficStatePer10Second(randomDataPer10Second).toString());
-                trafficModel.setTrafficJamPer100Second(heatMapVisualizationService.getTrafficStatePer100Second(randomDataPer100Second).toString());
-
-                System.out.println("Iteration " + i + ", bus traffic \n" + trafficModel);
-                System.out.println("---------------------------------------");
+                routeMap.put(lat1.toString() + "__" + lon1.toString(), getTrafficStatePer1Second(distance).toString());
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        });
+        SortedSet<String> keys = new TreeSet<>(routeMap.keySet());
+        System.out.println(keys);
+        for (String key : keys) {
+            String value = routeMap.get(key);
+            System.out.println("{" + key + " : " + value + "}");
         }
+    }
 
+    private void getTrafficFrom() throws Exception {
+
+        while (true) {
+            busTrafficModel.setTrafficJamPer1Second(
+                    getTrafficStatePer1Second(Destination.distance(busLocationModels.get(0).getLat(),
+                            busLocationModels.get(1).getLat(),
+                            busLocationModels.get(0).getLon(),
+                            busLocationModels.get(1).getLon())
+                    ).toString());
+
+            busTrafficModel.setTrafficJamPer10Second(
+                    getTrafficStatePer10Second(Destination.distance(busLocationModels.get(0).getLat(),
+                            busLocationModels.get(10).getLat(),
+                            busLocationModels.get(0).getLon(),
+                            busLocationModels.get(10).getLon())
+                    ).toString());
+
+            busTrafficModel.setTrafficJamPer100Second(
+                    getTrafficStatePer100Second(Destination.distance(busLocationModels.get(0).getLat(),
+                            busLocationModels.get(100).getLat(),
+                            busLocationModels.get(0).getLon(),
+                            busLocationModels.get(100).getLon())
+                    ).toString());
+
+
+            for (int ix = 1; ix < 100; ++ix) {
+                routeMap.put(
+                        busLocationModels.get(ix - 1).getLat().toString() + ":" + busLocationModels.get(ix - 1).getLon(),
+                        getTrafficStatePer1Second(Destination.distance(
+                                busLocationModels.get(ix - 1).getLat(), busLocationModels.get(ix).getLat(),
+                                busLocationModels.get(ix - 1).getLon(), busLocationModels.get(ix).getLon())
+                        ).toString());
+            }
+
+            busLocationModels.clear();
+            updateBusLocations();
+        }
+    }
+
+    public static void main(String[] args) {
+        HeatMapVisualizationService heatMapVisualizationService = new HeatMapVisualizationService();
+        heatMapVisualizationService.getTrafficFromTestResource();
     }
 }
 
