@@ -1,0 +1,29 @@
+[
+  {
+    "name": "abovyan_2_teryan_1",
+    "coordinates": {
+      "lat": 40.273419,
+      "long": 44.620235
+    },
+    "red_max_time": 15,
+    "green_max_time": 30
+  },
+  {
+    "name": "koryun_1_abovyan_1",
+    "coordinates": {
+      "lat": 40.273419,
+      "long": 44.620235
+    },
+    "red_max_time": 25,
+    "green_max_time": 30
+  },
+  {
+    "name": "halabyan_2_kievyan_1",
+    "coordinates": {
+      "lat": 40.273419,
+      "long": 44.620235
+    },
+    "red_max_time": 20,
+    "green_max_time": 25
+  }
+]

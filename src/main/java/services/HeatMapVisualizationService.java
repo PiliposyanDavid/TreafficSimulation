@@ -118,6 +118,10 @@ public class HeatMapVisualizationService {
         }
     }
 
+    public Map getTrafficRouteMap() {
+        return routeMap;
+    }
+
     public static void main(String[] args) {
         HeatMapVisualizationService heatMapVisualizationService = new HeatMapVisualizationService();
         heatMapVisualizationService.getTrafficFromTestResource();
