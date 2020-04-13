@@ -11,7 +11,7 @@ import java.util.*;
 
 public class HeatMapVisualizationService {
     private ArrayList<BusLocationModel> busLocationModels;
-    private Map<String, String> routeMap = new TreeMap<String, String>();
+    private static Map<String, String> routeMap = new TreeMap<String, String>();
     BusTrafficModel busTrafficModel = new BusTrafficModel();
 
     HeatMapVisualizationService() {
@@ -118,7 +118,7 @@ public class HeatMapVisualizationService {
         }
     }
 
-    public Map getTrafficRouteMap() {
+    public static Map<String, String> getTrafficRouteMap() {
         return routeMap;
     }
 

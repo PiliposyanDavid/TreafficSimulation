@@ -8,11 +8,10 @@ public class TrafficLights {
     private Coordinates coordinates;
     private String prefixName;
     private String other;
-    private String redMaxTime;
+    private Integer redMaxTime;
+    private Integer greenMaxTime;
 
-    private String greenMaxTime;
-
-    public TrafficLights(Coordinates coordinates, String prefixName, String other, String redMaxTime, String greenMaxTime) {
+    public TrafficLights(Coordinates coordinates, String prefixName, String other, Integer redMaxTime, Integer greenMaxTime) {
         this.coordinates = coordinates;
         this.prefixName = prefixName;
         this.other = other;
@@ -23,19 +22,19 @@ public class TrafficLights {
     public TrafficLights() {
     }
 
-    public String getGreenMaxTime() {
+    public Integer getGreenMaxTime() {
         return greenMaxTime;
     }
 
-    public void setGreenMaxTime(String greenMaxTime) {
+    public void setGreenMaxTime(Integer greenMaxTime) {
         this.greenMaxTime = greenMaxTime;
     }
 
-    public String getRedMaxTime() {
+    public Integer getRedMaxTime() {
         return redMaxTime;
     }
 
-    public void setRedMaxTime(String redMaxTime) {
+    public void setRedMaxTime(Integer redMaxTime) {
         this.redMaxTime = redMaxTime;
     }
 
