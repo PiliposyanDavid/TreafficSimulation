@@ -11,7 +11,7 @@ public class LightsTimerRegenerateService {
     private Coordinates coordinates = new Coordinates(40.273419, 44.620235);
     private TrafficLights trafficLight = new TrafficLights(coordinates, "abovyan_2_teryan_1", "tested", 20, 30);
 
-    private TrafficLights regenerateLightTime() {
+    public TrafficLights regenerateLightTime() {
         TrafficEnums value = getNearDegree(coordinates.getLat(), coordinates.getLon(), getTrafficRouteMap());
 
         if (value.equals(TrafficEnums.INVALID)) {
